@@ -10,6 +10,12 @@ interface IUserService{
   */
   function getBaseInfo($uid);
 
+    /**
+     * 获取用户博客相关信息
+     *
+     */
+    function getOtherInfo($uid,$typeService,$tagService,$articleService);
+
 
 }
 

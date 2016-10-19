@@ -1,5 +1,5 @@
 <?php
-namespace Home\Dto;
+namespace Home\Dto\core;
 abstract class BaseDto {
 
    public function toArray() {

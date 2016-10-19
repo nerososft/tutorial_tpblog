@@ -1,9 +1,9 @@
 <?php
 namespace Home\Service\core;
-use Home\Fliter\Fliter;
+use Home\Filter\Filter;
 
-abstract class BaseService implements Fliter{
-  public function fliter($data){
+abstract class BaseService implements Filter{
+  public function filter($data){
     return htmlspecialchars($data);
   }
 }

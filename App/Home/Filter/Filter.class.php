@@ -1,11 +1,11 @@
 <?php
-namespace Home\Fliter;
-interface Fliter{
+namespace Home\Filter;
+interface Filter{
 
 
   /**htmlspecialchars 过滤
   */
-  function fliter($data);
+  function filter($data);
 
   /**其他过滤规则*/
 }

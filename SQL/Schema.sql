@@ -19,9 +19,26 @@ CREATE TABLE IF NOT EXISTS blog_articles(
 #关于选择（没有绝对好或者不好，根据业务选型） 如果业务读多写少，定期更新的话，
 IASM比较合适。如果业务涉及事务，就选择InnoDB，个人建议常规项目，没有特殊要求的话就选择InnoDB。
 业务复杂的项目建议配合使用，IASM做定期数据备份。
+alter table blog_articles add typeid int default 1 not null;
 
 alter table blog_articles add count bigint default 0;
 insert into blog_articles (title,tagid,content) values ("标题1",1,"文章1");
+
+#创建分类表
+create table if not exists blog_type(
+  id int not null primary key auto_increment,
+  name varchar(16) NOT  null,
+  ctime DATETIME not null DEFAULT  CURRENT_TIMESTAMP
+)Engine=InnoDB;
+
+insert into blog_type (name) VALUE ("其他");
+
+#创建标签表
+create table if not exists blog_tag(
+  id int not null primary key auto_increment,
+  name varchar(16) NOT  null,
+  ctime DATETIME not null DEFAULT  CURRENT_TIMESTAMP
+)Engine=InnoDB;
 
 
 #创建博主信息表

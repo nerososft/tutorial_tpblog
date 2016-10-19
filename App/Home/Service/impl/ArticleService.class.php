@@ -1,5 +1,6 @@
 <?php
 namespace Home\Service\impl;
+use Home\Exception\ArticleNotFoundException;
 use Home\Service\IArticleService;
 use Home\Dto\Article;
 use Home\Service\core\BaseService;
@@ -12,26 +13,30 @@ function  __construct(){
   $this->articleModel = M("Articles");
 }
 
-  public function getArticles($limit,$offset){
+  public function getArticles($limit,$offset,$typeService){
      $result = $this->articleModel->limit($limit,$offset)->select();
       $articlesList = array();
-      // $returnjson = '[';
       foreach ($result as $key => $value) {
-        
-        $article = new Article($value['id'],$value['title'],$value['content'],$value['ctime'],$value['tag'],$value['count']);
+        $type = $typeService->getTypeNameById($value['tagid']);
+        $article = new Article($value['id'],$value['title'],mb_substr($value['content'],1,256,"utf-8")."...",$value['ctime'],$type,$value['count']);
 
         array_unshift($articlesList,$article);
-
-        // if($key!=(count($result)-1)){
-        //   $returnjson.=$article->__toString().",";
-        // }else{
-        //     $returnjson.=$article->__toString();
-        // }
       }
-
-      // $returnjson.="]";
       return $articlesList;
   }
+    public function getArticle($id,$typeService){
+        $value =  $this->articleModel->where("id = %d",$this->filter($id))->find();
+
+        if($value==null){
+            throw new ArticleNotFoundException("文章 ".$id." 找不到!");
+        }else {
+            $type = $typeService->getTypeNameById($value['typeid']);
+            return new Article($value['id'], $value['title'], $value['content'], $value['ctime'], $type, $value['count']);
+        }
+    }
+    public function countArticles(){
+        return $this->articleModel->count();
+    }
 }
 
 

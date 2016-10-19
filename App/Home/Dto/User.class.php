@@ -1,6 +1,6 @@
 <?php
 namespace Home\Dto;
-use Home\Dto\BaseDto;
+use Home\Dto\core\BaseDto;
 
 class User extends BaseDto{
   var  $uid;
