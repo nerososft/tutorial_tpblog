@@ -22,5 +22,11 @@ interface ITypeService
      */
     function countType();
 
+    /**
+     * 获取所有类型
+     * @return mixed
+     */
+    function  getAllType($articleService);
+
 
 }

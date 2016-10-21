@@ -11,6 +11,7 @@ namespace Home\Service\impl;
 
 use Home\Service\core\BaseService;
 use Home\Service\ITypeService;
+use Home\Dto\Types;
 
 class TypeService extends BaseService implements ITypeService
 {
@@ -48,5 +49,15 @@ class TypeService extends BaseService implements ITypeService
     {
         // TODO: Implement countType() method.
         return $this->typeModel->count();
+    }
+
+    public function getAllType($articleService){
+        $result =  $this->typeModel->select();
+        $typeList = array();
+        foreach ($result as $key => $value) {
+            # code...
+            array_unshift($typeList,new Types($value['id'],$value['name'],$articleService->countByTypeId($value['id'])));
+        }
+        return $typeList;
     }
 }

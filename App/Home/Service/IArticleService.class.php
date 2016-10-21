@@ -23,5 +23,17 @@ interface IArticleService{
    * @return mixed
    */
   function countArticles();
+
+
+  /**
+  *计数某类文章
+  */
+  function countByTypeId($typeid);
+
+
+  /**
+   * @return mixed文章归档
+   */
+  function guidang();
 }
 ?>

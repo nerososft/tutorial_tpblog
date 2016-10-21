@@ -14,7 +14,7 @@ function  __construct(){
 }
 
   public function getArticles($limit,$offset,$typeService){
-     $result = $this->articleModel->limit($limit,$offset)->select();
+     $result = $this->articleModel->limit($limit,$offset)->order("ctime")->select();
       $articlesList = array();
       foreach ($result as $key => $value) {
         $type = $typeService->getTypeNameById($value['tagid']);
@@ -37,6 +37,26 @@ function  __construct(){
     public function countArticles(){
         return $this->articleModel->count();
     }
+    public function countByTypeId($typeid){
+        return $this->articleModel->where("typeid=%d",$typeid)->count();
+    }
+
+    public function guidang()
+    {
+        // TODO: Implement guidang() method.
+        //limit ........
+        $articles = $this->getArticles(0,1000,new TypeService());
+
+        $arr = [];
+        foreach($articles as $key=>$value){
+           $arr[substr($value->ctime,0,4)][] = $value;
+        }
+        
+        return $arr;
+
+    }
+
+
 }
 
 
